@@ -85,6 +85,10 @@ class V2RayServiceProvider
         }
         $encodeOptions = is_null($encodeOptions) ? JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE : $encodeOptions;
 
+        // 20200817 临时处理 policy 中的 level，强转为对象
+        $levelsSetting = json_decode(json_encode($decode['policy']['levels'], JSON_FORCE_OBJECT));
+        $decode['policy']['levels'] = $levelsSetting;
+
         return $getArray ? $decode : json_encode($decode, $encodeOptions);
     }
 
