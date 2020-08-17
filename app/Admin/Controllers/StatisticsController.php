@@ -32,7 +32,10 @@ class StatisticsController extends AdminController
 
                     $grid->email;
                     $grid->month('月份');
-                    $grid->usage('已用量(MB)');
+                    $grid->usage('已用量')->display(function ($usage) {
+                        // MB 转成 byte ，然后转成可读值
+                        return convertToReadableSize($usage);
+                    })->sortable();
                     $grid->max_usage('总可用量(MB)');
                     $grid->column('progress', '使用进度')->display(function () {
                         if ($this->max_usage > 0) {
