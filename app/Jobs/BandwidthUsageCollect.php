@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Components\BandwidthStatisticsHandler;
 use App\Components\V2RayGRPC;
+use App\Models\V2RayClientAttribute;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -31,9 +32,12 @@ class BandwidthUsageCollect implements ShouldQueue
      */
     public function handle()
     {
-        $byte = V2RayGRPC::getInstance()->getStatsByEmail('test-liuliang@wuguozhang.com', true)['stat']['value'];
-        $stat = new BandwidthStatisticsHandler('test-liuliang@wuguozhang.com', $byte);
-        $stat->stat();
-        logger()->info(__METHOD__ . ' 统计完成， byte : '.$byte);
+        // 遍历所有邮箱进行统计
+        foreach (V2RayClientAttribute::all() as $model) {
+            $byte = V2RayGRPC::getInstance()->getStatsByEmail($model->email, true)['stat']['value'];
+            $stat = new BandwidthStatisticsHandler($model->email, $byte);
+            $stat->stat();
+            logger()->info(__METHOD__ . ' 统计完成， byte : '.$byte.' ; email : '.$model->email);
+        }
     }
 }
