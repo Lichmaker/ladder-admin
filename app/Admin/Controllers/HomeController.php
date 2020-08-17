@@ -26,7 +26,7 @@ class HomeController extends Controller
 
         $content->row('<HR>');
 
-        $email = \Admin::user()->name;
+        $email = \Admin::user()->username;
 
         $clientAttributesModel = V2RayClientAttribute::where('email', '=', $email)->first();
         $vmess = empty($clientAttributesModel) ? '' : $clientAttributesModel->v2ray_vmess;
