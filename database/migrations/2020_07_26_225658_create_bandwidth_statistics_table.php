@@ -17,7 +17,7 @@ class CreateBandwidthStatisticsTable extends Migration
             $table->id();
             $table->string('email', 64);
             $table->date('month');
-            $table->integer('usage', false, true);
+            $table->bigInteger('usage', false, true);
             $table->integer('max_usage')->default(-1)->comment('当月最大用量，单位MB');
             $table->timestamps();
         });

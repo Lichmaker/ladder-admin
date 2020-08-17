@@ -24,7 +24,7 @@ class BandwidthStatisticsSummaryHandler
         $model = $this->getModel($email, $date);
         $usageMB = round(byteToMB($usage));  // byte转成MB，四舍五入
         logger()->info(__METHOD__ . json_encode(compact('usage', 'usageMB')));
-        $model->usage += $usageMB;
+        $model->usage += $usage;
         if (!$model->save()) {
             throw new \Exception(__METHOD__.' save failed . '.json_encode($model->getAttributes(), JSON_UNESCAPED_UNICODE));
         }
