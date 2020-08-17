@@ -72,7 +72,7 @@ class V2RayCommandHandler
             return $output;
         } catch (Exception $exception) {
             logger()->error(__METHOD__ . ' 执行失败 ： '.$exception->getMessage());
-            throw new $exception;
+            throw $exception;
         }
     }
 

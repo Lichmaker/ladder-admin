@@ -25,9 +25,13 @@ class RemoteCommandHandler
             logger()->error(__METHOD__. ' '.__LINE__. ' ssh2 连接失败');
             throw new RemoteCommandException('服务器连接失败');
         }
-        if (!ssh2_auth_pubkey_file($this->sshConnectSession, 'root', config('v2ray.server_rsa_public_key'), config('v2ray.server_rsa_private_key'))) {
-            logger()->error(__METHOD__. ' '.__LINE__. ' ssh2 rsa key 验证失败');
-            throw new RemoteCommandException('服务器验证失败');
+        try {
+            if (!ssh2_auth_pubkey_file($this->sshConnectSession, 'root', config('v2ray.server_rsa_public_key'), config('v2ray.server_rsa_private_key'))) {
+                logger()->error(__METHOD__. ' '.__LINE__. ' ssh2 rsa key 验证失败');
+                throw new RemoteCommandException();
+            }
+        } catch (\Exception $exception) {
+            throw new RemoteCommandException('服务器验证失败，可能为 ssh rsa key 配置问题，请检查后重试');
         }
         logger()->info('ssh2 连接成功');
     }

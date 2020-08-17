@@ -1,5 +1,6 @@
 <?php
 
+use App\Components\V2RayClientManager;
 use App\Models\AdminArticle;
 use Dcat\Admin\Models\Administrator;
 use Dcat\Admin\Models\Menu;
@@ -26,6 +27,14 @@ class LadderAdminSeeder extends Seeder
             'name'       => 'admin@ladder-admin.org',
             'created_at' => $createdAt,
         ]);
+
+        try {
+            V2RayClientManager::createClientWithAdminUserId(1, 'admin@ladder-admin.org');
+        } catch (Exception $exception) {
+            // 销毁数据
+            Administrator::truncate();
+            throw $exception;
+        }
 
         // create a role.
         Role::truncate();

@@ -4,7 +4,10 @@ namespace App\Admin\Controllers;
 
 use App\Admin\Metrics\Examples;
 use App\Admin\Repositories\AdminArticle;
+use App\Components\BandwidthStatisticsSummaryHandler;
 use App\Http\Controllers\Controller;
+use App\Models\V2RayClientAttribute;
+use chillerlan\QRCode\QRCode;
 use Dcat\Admin\Controllers\Dashboard;
 use Dcat\Admin\Layout\Column;
 use Dcat\Admin\Layout\Content;
@@ -25,11 +28,19 @@ class HomeController extends Controller
 
         $email = \Admin::user()->name;
 
-        $content->row(view('blank', ['data' => \Parsedown::instance()->text(<<<EOL
-# {$email}，欢迎您使用本系统
-
-EOL
-)]));
+        $clientAttributesModel = V2RayClientAttribute::where('email', '=', $email)->first();
+        $vmess = empty($clientAttributesModel) ? '' : $clientAttributesModel->v2ray_vmess;
+        $statModel = BandwidthStatisticsSummaryHandler::getInstance()->getModel($email);
+        if (empty($statModel)) {
+            $max = empty($clientAttributesModel) ? '' : $clientAttributesModel->bandwidth_usage_max.'MB';
+            $usage = 0;
+        } else {
+            $max = $statModel->max_usage.'MB';
+            $usage = convertToReadableSize($statModel->usage);
+        }
+        $qrCode = new QRCode();
+        $imgSrc = empty($vmess) ? '' : $qrCode->render($vmess);
+        $content->row(view('user-home', compact('email', 'vmess', 'max', 'usage', 'imgSrc')));
 
         return $content;
     }
