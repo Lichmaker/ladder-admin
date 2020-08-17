@@ -75,7 +75,7 @@ return [
     | Html title for all pages.
     |
     */
-    'title' => 'Admin',
+    'title' => 'ladder-admin',
 
     /*
     |--------------------------------------------------------------------------
