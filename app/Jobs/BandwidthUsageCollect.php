@@ -34,7 +34,11 @@ class BandwidthUsageCollect implements ShouldQueue
     {
         // 遍历所有邮箱进行统计
         foreach (V2RayClientAttribute::all() as $model) {
-            $byte = V2RayGRPC::getInstance()->getStatsByEmail($model->email, true)['stat']['value'];
+            $respond = V2RayGRPC::getInstance()->getStatsByEmail($model->email, true);
+            if (!isset($respond['stat']['value'])) {
+                continue;
+            }
+            $byte = $respond['stat']['value'];
             $stat = new BandwidthStatisticsHandler($model->email, $byte);
             $stat->stat();
             logger()->info(__METHOD__ . ' 统计完成， byte : '.$byte.' ; email : '.$model->email);
