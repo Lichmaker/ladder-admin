@@ -48,11 +48,13 @@ class LadderAdminInstall extends Command
             return 0;
         }
 
+        $this->info('准备执行数据库迁移，若在生产模式中，请输入 yes ');
         $this->call('migrate');
 
         $userModel = config('admin.database.users_model');
 
         if ($userModel::count() == 0) {
+            $this->info('准备执行数据填充，若在生产模式中，请输入 yes ');
             $this->call('db:seed', ['--class' => \LadderAdminSeeder::class]);
         }
 
