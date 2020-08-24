@@ -3,6 +3,7 @@
 namespace App\Components;
 
 use App\Exceptions\V2RayConfigException;
+use App\Exceptions\V2RayException;
 use App\Models\V2RayClientAttribute;
 use App\TraitLib\Singleton;
 use App\Models\V2RayConfiguration;
@@ -81,7 +82,7 @@ class V2RayServiceProvider
         logger()->debug(__METHOD__. ' 读取到配置json '.$json);
         $decode = json_decode($json, true);
         if (!is_array($decode) || empty($decode)) {
-            throw new Exception('config读取失败 : '.$json);
+            throw new V2RayException('config读取失败 : '.$json);
         }
         $encodeOptions = is_null($encodeOptions) ? JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE : $encodeOptions;
 
@@ -148,10 +149,11 @@ class V2RayServiceProvider
     {
         logger()->debug(__METHOD__. ' 开始执行配置同步');
 
-        // 从数据库中读取
-        $configArray = $this->getCurrentConfig(true, true);
-        if (empty($configArray)) {
-            // 数据库中无数据，从服务器中获取
+        try {
+            // 从数据库中读取
+            $configArray = $this->getCurrentConfig(true, true);
+        } catch (V2RayException $v2RayException) {
+            // 数据库中无法读取，从服务器中进行读取
             $configArray = $this->getCurrentConfig(false, true);
         }
         if (empty($configArray) || !is_array($configArray)) {
