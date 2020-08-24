@@ -75,13 +75,13 @@ class V2RayServiceProvider
     {
         if ($fromDb) {
             $json = V2RayConfiguration::getV2RayConfigJson();
-            $decode = json_decode($json, true);
         } else {
             $json = V2RayCommandHandler::getInstance()->readConfig();
-            $decode = json_decode($json, true);
-            if (!is_array($decode)) {
-                throw new Exception('config读取失败 : '.$json);
-            }
+        }
+        logger()->debug(__METHOD__. ' 读取到配置json '.$json);
+        $decode = json_decode($json, true);
+        if (!is_array($decode) || empty($decode)) {
+            throw new Exception('config读取失败 : '.$json);
         }
         $encodeOptions = is_null($encodeOptions) ? JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE : $encodeOptions;
 
