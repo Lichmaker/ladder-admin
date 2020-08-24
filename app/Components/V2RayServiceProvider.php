@@ -22,9 +22,9 @@ class V2RayServiceProvider
         return V2RayCommandHandler::getInstance()->generateUUid();
     }
 
-    public function generateVmessConfig($uuid)
+    public function generateVmessConfig($uuid, $email)
     {
-        $vmessURL = VmessURLGenerator::getInstance()->generateByUuid($uuid);
+        $vmessURL = VmessURLGenerator::getInstance()->generateByUuid($uuid, $email);
 
         return [
             'vmessURL' => $vmessURL,

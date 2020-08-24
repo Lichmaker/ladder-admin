@@ -13,7 +13,7 @@ class V2RayClientManager
         $expire_at = date('Y-m-d', strtotime('next month'));  // 初始默认为下个月
 
         $uuid = V2RayServiceProvider::getInstance()->getUuid();
-        $v2rayConfig = V2RayServiceProvider::getInstance()->generateVmessConfig($uuid);
+        $v2rayConfig = V2RayServiceProvider::getInstance()->generateVmessConfig($uuid, $email);
         $v2ray_qrcode = '#';  // 暂不提供
         $v2ray_vmess = $v2rayConfig['vmessURL'];
 

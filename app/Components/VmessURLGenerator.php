@@ -13,32 +13,30 @@ class VmessURLGenerator
 
     protected $path;
 
-    protected $name;
-
     protected function __construct()
     {
         // 读取 host 配置
         $this->host = config('v2ray.config_host');
         $this->path = config('v2ray.config_url_path');
-        $this->name = config('v2ray.config_name');
     }
 
     /**
      * @param string $uuid
+     * @param string $email
      * @param int $alterId
      * @return string
      */
-    public function generateByUuid(string $uuid, int $alterId = 32)
+    public function generateByUuid(string $uuid, string $email,int $alterId = 32)
     {
-        $data = $this->build($uuid, $alterId);
+        $data = $this->build($uuid, $alterId, $email);
 
         return $this->render($data);
     }
 
-    protected function build($uuid, $alterId)
+    protected function build($uuid, $alterId, $email)
     {
         $data = $this->getTemplate();
-        $data['ps'] = $this->name;
+        $data['ps'] = $email;
         $data['host'] = $data['add'] = $this->host;
         $data['path'] = $this->path;
         $data['id'] = $uuid;
