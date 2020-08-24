@@ -20,7 +20,8 @@ class V2RayServiceProvider
      */
     public function getUUid()
     {
-        return V2RayCommandHandler::getInstance()->generateUUid();
+        // 把换行符丢掉
+        return str_replace([PHP_EOL, "\n"], '', V2RayCommandHandler::getInstance()->generateUUid());
     }
 
     public function generateVmessConfig($uuid, $email)
