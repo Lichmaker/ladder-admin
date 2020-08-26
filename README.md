@@ -1,79 +1,136 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# Ladder Admin
+> 一个简单的 v2ray 管理后台
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+基于 dcat-admin 编写的 v2ray 管理后台。提供 Client 管理、流量统计、配置管理等功能。  
+目前仍处于前期开发状态，仅供学习、参考，不建议进行使用。
 
-## About Laravel
+## Installation 安装
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+克隆仓库到本地
+```
+git clone https://github.com/Lichmaker/ladder-admin.git
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+修改配置文件
+```
+cd ladder-admin
+cp .env.example .env
+vim .env
+```
+```
+# .env 示例与说明：
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+# application 相关信息，可根据自己需求进行填写
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost
 
-## Learning Laravel
+LOG_CHANNEL=stack
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+# db 信息，请确保使用mysql并填入mysql链接信息
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# 按需填写
+BROADCAST_DRIVER=log
+CACHE_DRIVER=file
+QUEUE_CONNECTION=sync
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
 
-## Laravel Sponsors
+# redis 信息，请确保填入准确 redis 链接信息
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+# 按需填写
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS=null
+MAIL_FROM_NAME="${APP_NAME}"
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
-- [云软科技](http://www.yunruan.ltd/)
+# 按需填写
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=
 
-## Contributing
+# 按需填写
+PUSHER_APP_ID=
+PUSHER_APP_KEY=
+PUSHER_APP_SECRET=
+PUSHER_APP_CLUSTER=mt1
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# 按需填写
+MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
+MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
 
-## Code of Conduct
+# v2ray 在主机中的配置文件路径
+V2RAY_CONFIG_PATH="/etc/v2ray/config.json"
+# v2ray 在主机中的路径
+V2RAY_DAEMON_PATH="/usr/bin/v2ray/v2ray"
+# v2ctl 在主机中的路径
+V2RAY_CLI_PATH="/usr/bin/v2ray/v2ctl"
+# 在主机中执行重启v2ray的command
+V2RAY_RESTART_COMMAND="service v2ray restart"
+# v2ray 所在主机的IP，用于SSH
+V2RAY_SERVER_IP=""
+# 用于SSH登录的用户
+V2RAY_SERVER_USER=""
+# 用于SSH登录的端口
+V2RAY_SERVER_SSH_PORT=""
+# 用于SSH登录的 RSA public key 路径
+V2RAY_SERVER_RSA_PUBLIC_KEY_PATH=""
+# 用于SSH登录的 RSA private key 路径
+V2RAY_SERVER_RSA_PRIVATE_KEY_PATH=""
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# v2ray 配置中的链接host，用于 VMESS URL的生成，目前仅支持 TSL + WSS 的设置。
+V2RAY_CONFIG_HOST=""
+# v2ray 配置中的链接url path，用于 VMESS URL的生成，目前仅支持 TSL + WSS 的设置。
+V2RAY_CONFIG_URL_PATH=""
 
-## Security Vulnerabilities
+# v2ray 所在主机中设置的 grpc host,用于流量统计
+V2RAY_GPRC_HOST=""
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# 流量统计的月重置日期设置
+BANDWIDTH_RESET_DATE="1"
+```
 
-## License
+执行安装
+``` 
+php artisan ladder-admin:install
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Demo 示例
+
+todo. Demo 链接正在准备当中。
+
+## Release History 发布历史
+
+* dev-master
+    * 仍在前期开发中
+
+## Contact
+
+吴国章 - Guozhang Wu - Lichmaker – Twitter:[@lichmaker](https://twitter.com/lichmaker) - Weibo:[@神经考拉君](https://weibo.com/v5zhang) – Email: lich.wu2014@gmail.com
+
+
+## Contributing 
+
+因为仍在前期开发中，代码会进行频繁重构、大改，所以暂不接受 PR。如果有好的建议，欢迎提交 issue。
+
+## Licence
+
+Distributed under the MIT license. See ``LICENSE`` for more information.
+
+[https://github.com/Lichmaker/ladder-admin](https://github.com/Lichmaker/ladder-admin)
