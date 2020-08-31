@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "49ac635980c3ae253e5078edd4e5f308",
+    "content-hash": "94eceb406bb41c0c9d71097069929ed8",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3121,6 +3121,83 @@
                 }
             ],
             "time": "2020-07-08T00:05:43+00:00"
+        },
+        {
+            "name": "spatie/enum",
+            "version": "3.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/enum.git",
+                "reference": "f26ac524e80f20a97236a478a262fb3a02b580cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/enum/zipball/f26ac524e80f20a97236a478a262fb3a02b580cb",
+                "reference": "f26ac524e80f20a97236a478a262fb3a02b580cb",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^7.4"
+            },
+            "require-dev": {
+                "larapack/dd": "^1.1",
+                "phpunit/phpunit": "^9.0",
+                "vimeo/psalm": "^3.12"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Enum\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brent Roose",
+                    "email": "brent@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Tom Witkowski",
+                    "email": "dev@gummibeer.de",
+                    "homepage": "https://gummibeer.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP Enums",
+            "homepage": "https://github.com/spatie/enum",
+            "keywords": [
+                "enum",
+                "enumerable",
+                "spatie"
+            ],
+            "support": {
+                "docs": "https://docs.spatie.be/enum",
+                "issues": "https://github.com/spatie/enum/issues",
+                "source": "https://github.com/spatie/enum"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-08-28T10:50:26+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -9152,8 +9229,8 @@
     "prefer-lowest": false,
     "platform": {
         "php": "^7.2.5",
-        "ext-ssh2": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-ssh2": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"

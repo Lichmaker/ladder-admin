@@ -2,6 +2,7 @@
 
 namespace App\Components;
 
+use App\Enum\ClientActiveState;
 use App\Exceptions\V2RayClientException;
 use App\Models\V2RayClientAttribute;
 use Illuminate\Database\Eloquent\Model;
@@ -25,6 +26,7 @@ class V2RayClientManager
         $model->expire_at = $expire_at;
         $model->email = $email;
         $model->bandwidth_usage_max = -1;   // 默认无限
+        $model->active_state = ClientActiveState::activated()->value;
         if (!$model->save()) {
             throw new \Exception(__METHOD__.' save failed . '.json_encode($model->getAttributes(), JSON_UNESCAPED_UNICODE));
         }
@@ -81,5 +83,11 @@ class V2RayClientManager
         }
 
         return $v2RayClientAttribute->bandwidth_usage_max > 0 ? $v2RayClientAttribute->bandwidth_usage_max - $v2RayClientAttribute->usage : -1;
+    }
+
+    public static function getAllActivatedClient()
+    {
+        return V2RayClientAttribute::query()->where('active_state', '=', ClientActiveState::activated()->value)
+            ->get();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Components\BandwidthStatisticsHandler;
+use App\Components\V2RayClientManager;
 use App\Components\V2RayGRPC;
 use App\Models\V2RayClientAttribute;
 use Illuminate\Bus\Queueable;
@@ -33,7 +34,7 @@ class BandwidthUsageCollect implements ShouldQueue
     public function handle()
     {
         // 遍历所有邮箱进行统计
-        foreach (V2RayClientAttribute::all() as $model) {
+        foreach (V2RayClientManager::getAllActivatedClient() as $model) {
             $respond = V2RayGRPC::getInstance()->getStatsByEmail($model->email, true);
             if (!isset($respond['stat']['value'])) {
                 continue;
