@@ -20,6 +20,7 @@
         "grpc/grpc": "^1.30",
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^7.0",
+        "laravel/horizon": "^4.3",
         "laravel/tinker": "^2.0",
         "spatie/enum": "^3.1"
     },
