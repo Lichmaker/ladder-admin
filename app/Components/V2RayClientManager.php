@@ -90,4 +90,14 @@ class V2RayClientManager
         return V2RayClientAttribute::query()->where('active_state', '=', ClientActiveState::activated()->value)
             ->get();
     }
+
+    public static function freezeClient(V2RayClientAttribute $v2RayClientAttribute)
+    {
+        // todo
+//        $v2RayClientAttribute->active_state = ClientActiveState::freeze()->value;
+//        if (!$v2RayClientAttribute->update(['active_state'])) {
+//            throw new \Exception('保存失败 ： ');// todo
+//        }
+
+    }
 }
