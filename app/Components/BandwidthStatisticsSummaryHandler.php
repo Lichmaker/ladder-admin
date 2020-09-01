@@ -14,8 +14,8 @@ class BandwidthStatisticsSummaryHandler
 
     protected function __construct()
     {
-        // 流量重制日期
-        $this->resetDate = date('Y-m-'.config('bandwidth_reset_date'));
+        // 流量重置日期
+        $this->resetDate = date('Y-m-'.config('v2ray.bandwidth_reset_date'));
     }
 
     public function collect(string $email, int $usage)
