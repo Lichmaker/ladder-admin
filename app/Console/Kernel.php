@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->job(new BandwidthUsageCollect())->everyFiveMinutes();
+        $schedule->command('horizon:snapshot')->everyFiveMinutes();
     }
 
     /**

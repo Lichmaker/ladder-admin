@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'path' => 'horizon',
+    'path' => env('HORIZON_PATH', 'horizon'),
 
     /*
     |--------------------------------------------------------------------------
@@ -185,4 +185,6 @@ return [
             ],
         ],
     ],
+
+    'dashboard_host' => env('HORIZON_HOST', 'ladder-admin.test'),
 ];

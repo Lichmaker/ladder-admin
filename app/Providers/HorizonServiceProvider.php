@@ -33,10 +33,8 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
      */
     protected function gate()
     {
-        Gate::define('viewHorizon', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+        Gate::define('viewHorizon', function ($user = null) {
+            return request()->getHost() == config('horizon.dashboard_host');
         });
     }
 }
