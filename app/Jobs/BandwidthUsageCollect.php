@@ -35,7 +35,8 @@ class BandwidthUsageCollect implements ShouldQueue
     {
         // 遍历所有邮箱进行统计
         foreach (V2RayClientManager::getAllActivatedClient() as $model) {
-            $respond = V2RayGRPC::getInstance()->getStatsByEmail($model->email, true);
+            $reset = \App::isProduction();  // 仅生产环境才会执行 reset
+            $respond = V2RayGRPC::getInstance()->getStatsByEmail($model->email, $reset);
             if (!isset($respond['stat']['value'])) {
                 continue;
             }
