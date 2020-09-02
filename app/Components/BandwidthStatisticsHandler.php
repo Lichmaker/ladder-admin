@@ -4,6 +4,7 @@ namespace App\Components;
 
 use App\Admin\Repositories\BandwidthStatistic;
 use App\Admin\Repositories\BandwidthStatisticsLog;
+use App\Jobs\CheckClientBandwidth;
 
 class BandwidthStatisticsHandler
 {
@@ -31,6 +32,9 @@ class BandwidthStatisticsHandler
         } catch (\Exception $exception) {
             logger()->error(__METHOD__.__LINE__ . ' 异常 '.$exception->getMessage().$exception->getTraceAsString());
         }
+
+        // 触发异步流量检查
+        CheckClientBandwidth::dispatch($this->email);
     }
 
     protected function summary()

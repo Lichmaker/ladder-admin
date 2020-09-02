@@ -4,6 +4,7 @@ namespace App\Components;
 
 use App\Enum\ClientActiveState;
 use App\Exceptions\V2RayClientException;
+use App\Jobs\ReloadClientConfig;
 use App\Models\V2RayClientAttribute;
 use Illuminate\Database\Eloquent\Model;
 
@@ -99,5 +100,7 @@ class V2RayClientManager
 //            throw new \Exception('保存失败 ： ');// todo
 //        }
 
+        // 重新加载所有用户的配置
+        ReloadClientConfig::dispatch();
     }
 }
