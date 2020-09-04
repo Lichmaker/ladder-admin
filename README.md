@@ -6,6 +6,15 @@
 
 ## Installation 安装
 
+环境依赖
+
+请确保PHP环境已安装 `redis` 扩展
+```
+# 查看是否已安装 php-redis
+> php -m | grep redis
+> redis
+```
+
 克隆仓库到本地
 ```
 git clone https://github.com/Lichmaker/ladder-admin.git
@@ -37,7 +46,7 @@ DB_DATABASE=laravel
 DB_USERNAME=root
 DB_PASSWORD=
 
-# 按需填写
+# QUEUE_CONNECTION使用异步队列时填入对应驱动（如使用redis则填入redis），其余按需填写
 BROADCAST_DRIVER=log
 CACHE_DRIVER=file
 QUEUE_CONNECTION=sync
@@ -109,6 +118,25 @@ BANDWIDTH_RESET_DATE="1"
 执行安装
 ``` 
 php artisan ladder-admin:install
+```
+
+（可选）如果您想要体验更舒爽的服务，建议安装 ` supervisor ` 并启动 ` horizon `。 请先确保 PHP 所在环境中已经安装 ` redis ` 扩展。
+
+```
+# .env
+QUEUE_CONNECTION=redis
+
+# supervisor 配置文件 horizon.ini
+[program:horizon]
+process_name=%(program_name)s
+command=php /{$项目绝对路径}/artisan horizon
+autostart=true
+autorestart=true
+user=wuguozhang
+redirect_stderr=true
+stdout_logfile=/var/log/ladder-admin-horizon.log
+stopwaitsecs=3600
+
 ```
 
 ## Demo 示例
