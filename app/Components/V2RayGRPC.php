@@ -42,7 +42,14 @@ class V2RayGRPC
         $call = $this->client->GetStats($request);
         list($reply, $status) = $call->wait();
         if (!$reply) {
-            throw new Exception(json_encode($status));
+            // 记录log， 返回0
+            logger()->warning(__METHOD__. ' 无法获取reply : '.json_encode($status));
+            return [
+                "stat" => [
+                    "name" => "user>>>{$email}>>>traffic>>>downlink",
+                    "value" => "0",
+                ],
+            ];
         }
         return json_decode($reply->serializeToJsonString(), true);
     }
