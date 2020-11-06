@@ -22,10 +22,6 @@ class HomeController extends Controller
         $data = AdminArticle::getAnnouncementContent();
         $content->header('Ladder Admin')->description('欢迎使用 Ladder Admin 管理后台');
 
-        $content->row(view('blank', compact('data')));
-
-        $content->row('<HR>');
-
         $email = \Admin::user()->username;
 
         $clientAttributesModel = V2RayClientAttribute::where('email', '=', $email)->first();
@@ -41,6 +37,9 @@ class HomeController extends Controller
         $qrCode = new QRCode();
         $imgSrc = empty($vmess) ? '' : $qrCode->render($vmess);
         $content->row(view('user-home', compact('email', 'vmess', 'max', 'usage', 'imgSrc')));
+
+        $content->row('<HR>');
+        $content->row(view('blank', compact('data')));
 
         return $content;
     }
