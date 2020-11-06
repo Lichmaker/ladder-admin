@@ -19,8 +19,8 @@ class HomeController extends Controller
 {
     public function index(Content $content)
     {
-        $data = AdminArticle::getAnnouncementContent();
         $content->header('Ladder Admin')->description('欢迎使用 Ladder Admin 管理后台');
+        $content->row('<HR>');
 
         $email = \Admin::user()->username;
 
@@ -38,7 +38,7 @@ class HomeController extends Controller
         $imgSrc = empty($vmess) ? '' : $qrCode->render($vmess);
         $content->row(view('user-home', compact('email', 'vmess', 'max', 'usage', 'imgSrc')));
 
-        $content->row('<HR>');
+        $data = AdminArticle::getAnnouncementContent();
         $content->row(view('blank', compact('data')));
 
         return $content;

@@ -8,4 +8,4 @@
 <p><img src="{{$imgSrc}}" width="200" height="200"></p>
 
 <p>vmess链接可用于复制后在软件内使用"粘贴板（剪切板）加载"来加载配置</p>
-<p style="width:500px;height:300px;word-wrap:break-word;">{{$vmess}}</p>
+<p style="width:500px;height:100px;word-wrap:break-word;">{{$vmess}}</p>
