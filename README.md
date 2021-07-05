@@ -2,8 +2,8 @@
 > 一个简单的 v2ray 管理后台
 
 基于 dcat-admin 编写的 v2ray 管理后台。提供 Client 管理、流量统计、配置管理等功能。  
-目前仍处于前期开发状态，仅供学习、参考，不建议进行使用。
-流量统计模块以前单独出一个golang服务，可以直接通过docker安装使用，只需填入正确配置，简单轻便十分舒爽： https://github.com/Lichmaker/v2ray-data-stat
+目前仍处于前期开发状态，仅供学习、参考，不建议进行使用。  
+`v0.0.2`后，流量统计模块已经单独出一个golang服务，可以直接通过docker安装使用，只需填入正确配置，简单轻便十分舒爽： https://github.com/Lichmaker/v2ray-data-stat
 
 ## Installation 安装
 
