@@ -3,6 +3,7 @@
 
 基于 dcat-admin 编写的 v2ray 管理后台。提供 Client 管理、流量统计、配置管理等功能。  
 目前仍处于前期开发状态，仅供学习、参考，不建议进行使用。
+流量统计模块以前单独出一个golang服务，可以直接通过docker安装使用，只需填入正确配置，简单轻便十分舒爽： https://github.com/Lichmaker/v2ray-data-stat
 
 ## Installation 安装
 
@@ -108,9 +109,6 @@ V2RAY_CONFIG_HOST=""
 # v2ray 配置中的链接url path，用于 VMESS URL的生成，目前仅支持 TSL + WSS 的设置。
 V2RAY_CONFIG_URL_PATH=""
 
-# v2ray 所在主机中设置的 grpc host,用于流量统计
-V2RAY_GPRC_HOST=""
-
 # 流量统计的月重置日期设置
 BANDWIDTH_RESET_DATE="1"
 ```
@@ -120,7 +118,7 @@ BANDWIDTH_RESET_DATE="1"
 php artisan ladder-admin:install
 ```
 
-（可选）如果您想要体验更舒爽的服务，建议安装 ` supervisor ` 并启动 ` horizon `。 请先确保 PHP 所在环境中已经安装 ` redis ` 扩展。
+安装 ` supervisor ` 并启动 ` horizon `。 请先确保 PHP 所在环境中已经安装 ` redis ` 扩展。
 
 ```
 # .env
@@ -145,6 +143,9 @@ todo. Demo 链接正在准备当中。
 
 ## Release History 发布历史
 
+* 0.0.2
+    * 2021-07-05
+    * 流量统计单独出golang服务，发布一个勉强能用的版本
 * dev-master
     * 仍在前期开发中
 
