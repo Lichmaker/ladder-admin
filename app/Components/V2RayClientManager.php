@@ -51,7 +51,8 @@ class V2RayClientManager
             'email' => $email,
         ])->first();
         if (empty($query)) {
-            throw new V2RayClientException('email not found');
+            logger()->warning(__METHOD__.':email not found. '.$email);
+            return;
         }
         $query->stat_updated_at = date('Y-m-d H:i:s');
         if (!$query->save()) {

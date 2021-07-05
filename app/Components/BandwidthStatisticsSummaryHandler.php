@@ -18,13 +18,13 @@ class BandwidthStatisticsSummaryHandler
         $this->resetDate = date('Y-m-'.config('v2ray.bandwidth_reset_date'));
     }
 
-    public function collect(string $email, int $usage)
+    public function update(string $email, int $usage)
     {
         $date = $this->getCurrentDate();
         $model = $this->getModel($email, $date);
         $usageMB = round(byteToMB($usage));  // byte转成MB，四舍五入
         logger()->info(__METHOD__ . json_encode(compact('usage', 'usageMB')));
-        $model->usage += $usage;
+        $model->usage = $usage;
         if (!$model->save()) {
             throw new \Exception(__METHOD__.' save failed . '.json_encode($model->getAttributes(), JSON_UNESCAPED_UNICODE));
         }

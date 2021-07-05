@@ -49,7 +49,11 @@ class CheckClientBandwidth implements ShouldQueue
         $maxByte = $maxMB * 1024 * 1024;
         if ($currentModel->usage >= $maxByte) {
             // 冻结账号
-            V2RayClientManager::freezeClient(V2RayClientManager::getClientByEmail($this->email));
+            $clientModel = V2RayClientManager::getClientByEmail($this->email);
+            if (empty($clientModel)) {
+                logger()->warning(__METHOD__.':找不到数据。'.$this->email);
+            }
+            V2RayClientManager::freezeClient($clientModel);
         }
     }
 }

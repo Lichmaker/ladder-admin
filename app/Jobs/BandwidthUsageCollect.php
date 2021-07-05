@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Admin\Repositories\DataSummary;
 use App\Components\BandwidthStatisticsHandler;
 use App\Components\V2RayClientManager;
 use App\Components\V2RayGRPC;
@@ -33,17 +34,16 @@ class BandwidthUsageCollect implements ShouldQueue
      */
     public function handle()
     {
-        // 遍历所有邮箱进行统计
-        foreach (V2RayClientManager::getAllActivatedClient() as $model) {
-            $reset = \App::isProduction();  // 仅生产环境才会执行 reset
-            $respond = V2RayGRPC::getInstance()->getStatsByEmail($model->email, $reset);
-            if (!isset($respond['stat']['value'])) {
-                continue;
-            }
-            $byte = $respond['stat']['value'];
-            $stat = new BandwidthStatisticsHandler($model->email, $byte);
+        // 读取golang统计数据，写入到表中
+        $date = date('Y-m-d');
+        $query = DataSummary::make()->createEloquent()->newQuery()->where([
+            'date' => $date,
+        ])->get();
+        foreach ($query as $row) {
+            $byte = $row->uplink_byte + $row->downlink_byte;
+            $stat = new BandwidthStatisticsHandler($row->username, $byte);
             $stat->stat();
-            logger()->info(__METHOD__ . ' 统计完成， byte : '.$byte.' ; email : '.$model->email);
+            logger()->info(__METHOD__ . ' 统计完成， byte : '.$byte.' ; email : '.$row->username);
         }
     }
 }
