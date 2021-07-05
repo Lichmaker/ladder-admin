@@ -26,6 +26,7 @@ Route::group([
     $router->resource('admin-articles', 'AdminArticleController');
     $router->resource('v2ray-client-attributes', 'V2RayClientAttributeController');
     $router->resource('bandwidth-statistics', 'BandwidthStatisticController');
+    $router->resource('data-summary', 'DataSummaryController');
 
     $router->post('auth/users', 'UserController@store');
 });

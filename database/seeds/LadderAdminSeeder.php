@@ -167,6 +167,16 @@ class LadderAdminSeeder extends Seeder
                 'order'       => 11,
                 'created_at'  => $createdAt,
             ],
+            [
+                'id'          => 12,
+                'name'        => '全部流量统计（golang）',
+                'slug'        => 'data-summary',
+                'http_method' => '',
+                'http_path'   => '/data-summary*',
+                'parent_id'   => 9,
+                'order'       => 12,
+                'created_at'  => $createdAt,
+            ],
         ]);
 
         // add default menus.
@@ -292,12 +302,21 @@ class LadderAdminSeeder extends Seeder
                 'uri'           => '/help/home',
                 'created_at'    => $createdAt,
             ],
+            [
+                'parent_id'     => 5,
+                'order'         => 16,
+                'title'         => '所有流量数据（golang）',
+                'icon'          => 'feather icon-settings',
+                'uri'           => '/data-summary',
+                'created_at'    => $createdAt,
+            ],
         ]);
 
         // add menu permission
         Menu::where('id', '=', 14)->first()->permissions()->save(Permission::where('id', '=', 7)->first());
         Menu::where('id', '=', 7)->first()->permissions()->save(Permission::where('id', '=', 10)->first());
         Menu::where('id', '=', 6)->first()->permissions()->save(Permission::where('id', '=', 11)->first());
+        Menu::where('id', '=', 16)->first()->permissions()->save(Permission::where('id', '=', 12)->first());
 
         // add role admin
         $admin = Role::where('id', '=', 1)->first();
@@ -308,6 +327,7 @@ class LadderAdminSeeder extends Seeder
         Menu::where('id', '=', 3)->first()->roles()->save($admin);
         Menu::where('id', '=', 4)->first()->roles()->save($admin);
         Menu::where('id', '=', 7)->first()->roles()->save($admin);
+        Menu::where('id', '=', 16)->first()->roles()->save($admin);
         Menu::where('id', '=', 6)->first()->roles()->save($normal);
         Menu::where('id', '=', 15)->first()->roles()->save($normal);
 
