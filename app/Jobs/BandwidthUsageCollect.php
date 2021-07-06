@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Admin\Repositories\DataSummary;
 use App\Components\BandwidthStatisticsHandler;
+use App\Components\BandwidthStatisticsSummaryHandler;
 use App\Components\V2RayClientManager;
 use App\Components\V2RayGRPC;
 use App\Models\V2RayClientAttribute;
@@ -12,6 +13,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 
 class BandwidthUsageCollect implements ShouldQueue
 {
@@ -34,16 +36,15 @@ class BandwidthUsageCollect implements ShouldQueue
      */
     public function handle()
     {
-        // 读取golang统计数据，写入到表中
-        $date = date('Y-m-d');
-        $query = DataSummary::make()->createEloquent()->newQuery()->where([
-            'date' => $date,
-        ])->get();
+//        // 读取golang统计数据，写入到表中
+        $dateRange = BandwidthStatisticsSummaryHandler::getInstance()->getCurrentDataRange();
+        $query = DataSummary::make()->createEloquent()->newQuery()
+            ->whereBetween('date', [$dateRange['start'], $dateRange['end']])
+            ->groupBy('username')->selectRaw('sum(`uplink_byte`+`downlink_byte`) as byte, username')->get();
         foreach ($query as $row) {
-            $byte = $row->uplink_byte + $row->downlink_byte;
-            $stat = new BandwidthStatisticsHandler($row->username, $byte);
+            $stat = new BandwidthStatisticsHandler($row->username, $row->byte);
             $stat->stat();
-            logger()->info(__METHOD__ . ' 统计完成， byte : '.$byte.' ; email : '.$row->username);
+            logger()->info(__METHOD__ . ' 统计完成， byte : '.$row->byte.' ; email : '.$row->username);
         }
     }
 }

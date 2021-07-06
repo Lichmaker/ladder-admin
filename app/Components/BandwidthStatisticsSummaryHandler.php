@@ -64,4 +64,21 @@ class BandwidthStatisticsSummaryHandler
         }
         return $date;
     }
+
+    public function getCurrentDataRange()
+    {
+        if (strtotime($this->resetDate) >= time()) {
+            // 计入上个月
+            $data = [
+                'start' => date('Y-m-d', strtotime('-1 month', strtotime($this->resetDate))),
+                'end' => date('Y-m-d', strtotime('-1 day', strtotime($this->resetDate))),
+            ];
+        } else {
+            $data = [
+                'start' => $this->resetDate,
+                'end' => date('Y-m-d', strtotime('+1 month -1 day', strtotime($this->resetDate))),
+            ];
+        }
+        return $data;
+    }
 }

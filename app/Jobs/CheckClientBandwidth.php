@@ -52,6 +52,7 @@ class CheckClientBandwidth implements ShouldQueue
             $clientModel = V2RayClientManager::getClientByEmail($this->email);
             if (empty($clientModel)) {
                 logger()->warning(__METHOD__.':找不到数据。'.$this->email);
+                return;
             }
             V2RayClientManager::freezeClient($clientModel);
         }
