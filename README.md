@@ -5,6 +5,9 @@
 目前仍处于前期开发状态，仅供学习、参考，不建议进行使用。  
 `v0.0.2`后，流量统计模块已经单独出一个golang服务，可以直接通过docker安装使用，只需填入正确配置，简单轻便十分舒爽： https://github.com/Lichmaker/v2ray-data-stat
 
+# WARNING!!!
+本项目已停止更新， 正在使用 glang 的 gin-vue-admin 进行重写。所有功能都会在新项目里得到重生 :)
+
 ## Installation 安装
 
 环境依赖
