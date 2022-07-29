@@ -1,4 +1,4 @@
-# Ladder Admin
+# 2.0版本已经在开发中： https://github.com/Lichmaker/ladder-admin-v2
 > 一个简单的 v2ray 管理后台
 
 基于 dcat-admin 编写的 v2ray 管理后台。提供 Client 管理、流量统计、配置管理等功能。  
