@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Admin\Metrics\Examples;
 use App\Admin\Repositories\AdminArticle;
 use App\Components\BandwidthStatisticsSummaryHandler;
+use App\Components\V2RayServiceProvider;
 use App\Http\Controllers\Controller;
 use App\Models\V2RayClientAttribute;
 use chillerlan\QRCode\QRCode;
@@ -25,7 +26,11 @@ class HomeController extends Controller
         $email = \Admin::user()->username;
 
         $clientAttributesModel = V2RayClientAttribute::where('email', '=', $email)->first();
-        $vmess = empty($clientAttributesModel) ? '' : $clientAttributesModel->v2ray_vmess;
+//        $vmess = empty($clientAttributesModel) ? '' : $clientAttributesModel->v2ray_vmess;
+
+        $v2rayConfig = V2RayServiceProvider::getInstance()->generateVmessConfig($clientAttributesModel->uuid, $email);
+        $vmess = $v2rayConfig['vmessURL'];
+
         $statModel = BandwidthStatisticsSummaryHandler::getInstance()->getModel($email);
         if (empty($statModel)) {
             $max = empty($clientAttributesModel) ? '' : $clientAttributesModel->bandwidth_usage_max.'MB';

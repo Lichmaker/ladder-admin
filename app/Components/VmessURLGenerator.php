@@ -53,7 +53,8 @@ class VmessURLGenerator
     public function getTemplate()
     {
         return [
-            'port' => '443',
+//            'port' => '443',
+            'port' => '3002',
             'ps' => NULL,
             'tls' => 'tls',
             'id' => NULL,
