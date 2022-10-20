@@ -54,7 +54,7 @@ class VmessURLGenerator
     {
         return [
 //            'port' => '443',
-            'port' => '3003',
+            'port' => '3004',
             'ps' => NULL,
             'tls' => 'tls',
             'id' => NULL,
